@@ -1,0 +1,73 @@
+@themeRed: #f00;
+@themeGray: #e5e5e5;
+@orange: orange;
+@margin_10: 10px;
+@padding_lf_10: 10px;
+@padding_10: 10px;
+
+@textLarge: 24px;
+@textNormal: 16px;
+@textSmall: 13px;
+
+@radusLarge: 10px;
+@radusNormal: 5px;
+@radusSmall: 1px;
+
+html, body {
+    font-size: 14px;
+}
+button, input, textarea, select {
+    outline: none;
+}
+.text_large {
+    font-size: 24px;
+}
+.text_normal {
+    font-size: 18px;
+}
+.text_small {
+    font-size: 16px;
+}
+
+.button_text_large {
+    font-size: 0.8vw; 
+}
+.button_text_small {
+    font-size: 0.6vw;
+}
+
+.button-active {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    padding: 8px 0;
+    font-size: @textNormal;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.margin_lr_10 {
+    margin:0 10px;
+}
+.border_1px:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #000;
+    transform-origin: 50% 0%;
+}
+@media only screen and (-webkit-min-device-pixel-ratio:2) {
+    .border_1px:before {
+        transform: scaleY(0.5)
+    }
+}
+@media only screen and (-webkit-min-device-pixel-ratio:3) {
+    .border_1px:before{
+        transform: scaleY(0.33)
+    }
+}
