@@ -1,5 +1,6 @@
 <template>
     <div class="order-wrap">
+        <!-- 步骤节点 -->
         <ul class="process-node">
             <li 
             v-for="(item, index) in processes" 
@@ -10,6 +11,7 @@
             </div>
             </li>
         </ul>
+        <!-- 订单详情 -->
         <div class="order-detail-wrap">
             <div class="order-detail" :class="{'anim': true}">
                 <h3><span>￥</span>10.00</h3>
@@ -20,16 +22,22 @@
                 </div>
             </div>
         </div>
+        <!-- 完成率文字提示 -->
         <p class="process_tip margin_lr_20">已完成<span>{{state.completeNum}}/{{state.orderNum}}</span></p>
+        <!-- 兑奖按钮 -->
         <div class="button_content margin_lr_20">
             <button class="button-active">点我兑奖</button>
             <p><span>温馨提示: </span>点击兑奖即可实时兑奖到账</p>
         </div>
+        <!-- 提示框 -->
+        <TipDialog></TipDialog>
     </div>
 </template>
 <script>
 import { reactive, computed } from 'vue'
+import TipDialog from '../components/TipDialog.vue'
 export default {
+    components: {TipDialog},
     setup() {
         const state = reactive({
         orders: [{id: '7875454544545', time: '2020.07.29 15:10:11'}], // 订单
@@ -90,7 +98,7 @@ export default {
             }
     }
     .order-detail-wrap {
-        height: 300px;
+        height: 220px;
         position: relative;
         overflow: hidden;
         margin-top: -30px;

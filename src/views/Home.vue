@@ -1,46 +1,54 @@
 <template>
   <div class="home">
+    <!-- 动画区域 -->
     <div class="animation-box">
       <span class="ani-bird"></span>
       <span class="ani-coin"></span>
     </div>
+    <!-- 滚动文字 -->
     <div class="scroll-text">
       <p>{{scrollText}}</p>
     </div>
-    <p class="text-info margin_lr_10">
-      <span class="home-add-icon">{{adderss}}</span>
-      <span>{{cardID}}</span>
-    </p>
-    <ul class="home-content">
-      <li 
-      @click="choose(index)"
-      v-for="(item, index) in cardItems" 
-      :key="item.num+index">
-        <div  
-        :class="{'item-active': index === state.activeIndex}"
-        class="home-content-item" >
-          <p class="item_num">
-            <span>{{item.num}}</span>
-            <span>{{item.label}}</span>
-          </p>
-          <p class="item_money">金额:<span>{{item.num*10}}</span>￥</p>
-          <p class="item_button" @click="buy"><button>立即购买</button></p>
-        </div>
-      </li>
-       <li :key="6">
-      <div  
-        class="home-content-item input-item" 
+    <!-- 主内容区 -->
+    <div class="content-box">
+      <!-- 文字注解 -->
+      <p class="text-info margin_lr_10">
+        <span class="home-add-icon">{{adderss}}</span>
+        <span>{{cardID}}</span>
+      </p>
+      <!-- 购买选项卡 -->
+      <ul class="home-content">
+        <li 
         @click="choose(index)"
-        :class="{'item-active': index === state.activeIndex}">
-         <p class="text_normal"><span>自定义张数</span></p>
-        <p>(<input type="text" placeholder="输入张数">)</p>
-        <p class="item_button"><button>立即购买</button></p>
-      </div>
-      </li>
-    </ul>
-    <p class="margin_lr_10 button_bottom">
-      <button @click="autoChoose" class="button-active">抽一抽今日运气张数</button>
-    </p>
+        v-for="(item, index) in cardItems" 
+        :key="item.num+index">
+          <div  
+          :class="{'item-active': index === state.activeIndex}"
+          class="home-content-item" >
+            <p class="item_num">
+              <span>{{item.num}}</span>
+              <span>{{item.label}}</span>
+            </p>
+            <p class="item_money">金额:<span>{{item.num*10}}</span>￥</p>
+            <p class="item_button" @click="buy"><button>立即购买</button></p>
+          </div>
+        </li>
+        <li :key="6">
+        <div  
+          class="home-content-item input-item" 
+          @click="choose(index)"
+          :class="{'item-active': index === state.activeIndex}">
+          <p class="text_normal"><span>自定义张数</span></p>
+          <p>(<input type="text" placeholder="输入张数">)</p>
+          <p class="item_button"><button>立即购买</button></p>
+        </div>
+        </li>
+      </ul>
+      <!-- 自动选择按钮 -->
+      <p class="margin_lr_10 button_bottom">
+        <button @click="autoChoose" class="button-active">抽一抽今日运气张数</button>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -96,16 +104,18 @@ export default {
 <style lang="less" scoped>
 @import url('../style/base');
 @bannerHeight: 228px;
-html, body {
-  background: #fff;
-}
 .home {
   position: relative;
   box-sizing: border-box;
-  border-radius: 10px;
-  background-color: #fff;
   padding: 10px 0;
+  background: #fff;
   margin-top: @bannerHeight;
+  .content-box {
+    position: relative;
+    margin-top: -14px;
+    background-color: #fff;
+    border-radius: 7px;
+  }
   // 动画区域
   .animation-box {
     position: absolute;
@@ -154,10 +164,19 @@ html, body {
     background-size: 100% auto;
     z-index: -1;
   }
+  &::after {
+    content: '';
+    background: #fff;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: -9;
+  }
   .scroll-text {
     text-align: center;
     position: absolute;
-  //  top: 20px;
     overflow: hidden;
     height: 20px;
     width: 200px;
@@ -166,7 +185,6 @@ html, body {
     left: 85px;
     p {
       position: absolute;
-     // right: -100px;
       animation: text-scroll 8s infinite;
       transform: translateX(0px);
       line-height: 20px;
