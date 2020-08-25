@@ -6,6 +6,4 @@ import './style/base.less'
 //import VueCompositionApi from '@vue/composition-api'
 import 'ress'
 
-
-
 createApp(App).use(router).use(store).mount('#app')

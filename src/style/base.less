@@ -1,4 +1,5 @@
-@themeRed: #f00;
+@themeRed: #f1563c;
+@gradientRed: linear-gradient(to bottom, #ff7953, @themeRed);
 @themeGray: #e5e5e5;
 @orange: orange;
 @margin_10: 10px;
@@ -15,6 +16,7 @@
 
 html, body {
     font-size: 14px;
+    background: #efefef;
 }
 button, input, textarea, select {
     outline: none;
@@ -42,6 +44,8 @@ button, input, textarea, select {
     color: #fff;
     padding: 8px 0;
     font-size: @textNormal;
+    background: @gradientRed;
+    border-radius: @radusNormal;
 }
 
 ul, li {
@@ -50,6 +54,13 @@ ul, li {
 
 .margin_lr_10 {
     margin:0 10px;
+}
+
+.margin_lr_20 {
+    margin:0 20px;
+}
+.margin_lr_20 {
+    margin: 20px;
 }
 .border_1px:before {
     content: '';

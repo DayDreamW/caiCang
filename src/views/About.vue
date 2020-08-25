@@ -16,7 +16,8 @@ export default {
 </script>
 <style scoped lang="less">
 //@import '../style/base.less';
-.about {
+.about { 
+  
   font-size: 16px;
   h1 {
     font-size: 50px;

@@ -4,32 +4,38 @@
       <span class="ani-bird"></span>
       <span class="ani-coin"></span>
     </div>
+    <div class="scroll-text">
+      <p>{{scrollText}}</p>
+    </div>
     <p class="text-info margin_lr_10">
       <span class="home-add-icon">{{adderss}}</span>
       <span>{{cardID}}</span>
     </p>
     <ul class="home-content">
       <li 
-      class="home-content-item" 
       @click="choose(index)"
-      :class="{'item-active': index === state.activeIndex}"
       v-for="(item, index) in cardItems" 
       :key="item.num+index">
-        <p class="item_num">
-          <span>{{item.num}}</span>
-          <span>{{item.label}}</span>
-        </p>
-        <p class="item_money">金额:<span>{{item.num*10}}</span>￥</p>
-        <p class="item_button"><button>立即购买</button></p>
+        <div  
+        :class="{'item-active': index === state.activeIndex}"
+        class="home-content-item" >
+          <p class="item_num">
+            <span>{{item.num}}</span>
+            <span>{{item.label}}</span>
+          </p>
+          <p class="item_money">金额:<span>{{item.num*10}}</span>￥</p>
+          <p class="item_button" @click="buy"><button>立即购买</button></p>
+        </div>
       </li>
-       <li 
-      class="home-content-item input-item" 
-      @click="choose(index)"
-      :class="{'item-active': index === state.activeIndex}"
-      :key="6">
-        <p class="text_normal"><span>自定义张数</span></p>
+       <li :key="6">
+      <div  
+        class="home-content-item input-item" 
+        @click="choose(index)"
+        :class="{'item-active': index === state.activeIndex}">
+         <p class="text_normal"><span>自定义张数</span></p>
         <p>(<input type="text" placeholder="输入张数">)</p>
         <p class="item_button"><button>立即购买</button></p>
+      </div>
       </li>
     </ul>
     <p class="margin_lr_10 button_bottom">
@@ -55,10 +61,13 @@ export default {
       activeIndex: 0, // 当前选中索引
       adderss: '徐汇万科中心店自提点', // 设备地址
       cardID: 'S123456465', // 设备编号
+      scrollText: '感谢您对公益事业的支持与爱心', // 滚动文字
+      scroll1: 0, // 文字1滚动距离
+      scroll2: 0, // 文字2滚动距离
     })
     // 点击购买
     function buy () {
-     // this.$router.push('/about')
+      this.$router.push('/detail')
     }
     // 点击自动选择
     async function autoChoose () {
@@ -66,7 +75,7 @@ export default {
       while(n > 1) {
         let tempNum = randomNum(state.cardItems.length)
         state.activeIndex = tempNum
-        await sleep(100)
+        await sleep(150)
         n--
       }
     }
@@ -74,19 +83,25 @@ export default {
     function choose (index) {
       state.activeIndex = index
     }
+
     return {
       ...state, state, buy, autoChoose, choose
     }
   }
 }
 </script>
+<style>
+
+</style>
 <style lang="less" scoped>
 @import url('../style/base');
 @bannerHeight: 228px;
+html, body {
+  background: #fff;
+}
 .home {
   position: relative;
   box-sizing: border-box;
- // margin-top: -30px;
   border-radius: 10px;
   background-color: #fff;
   padding: 10px 0;
@@ -139,6 +154,24 @@ export default {
     background-size: 100% auto;
     z-index: -1;
   }
+  .scroll-text {
+    text-align: center;
+    position: absolute;
+  //  top: 20px;
+    overflow: hidden;
+    height: 20px;
+    width: 200px;
+    top: -55px;
+    background: #fff;
+    left: 85px;
+    p {
+      position: absolute;
+     // right: -100px;
+      animation: text-scroll 8s infinite;
+      transform: translateX(0px);
+      line-height: 20px;
+    }
+  }
   .text-info {
     display: flex;
     justify-content: space-between;
@@ -154,16 +187,17 @@ export default {
     justify-content: flex-start;
     flex-wrap: wrap;
     margin-left: 5px;
+    li {
+        width: calc(33% - 10px);
+        text-align: center;
+        margin: 5px 5px 10px 5px;
+    }
     .home-content-item {
       padding-top: 8px;
-      margin: 5px;
-      width: calc(33% - 10px);
-      text-align: center;
-      transition: border 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
       border: solid @orange 5px;
       border-radius: @radusNormal;
-      margin-bottom: 10px;
-      box-shadow: 0px 8px 4px #ccc;
+      box-shadow: 1px 4px 6px #fff;
       .item_num {
         span {
           font-weight: 700;
@@ -199,30 +233,29 @@ export default {
     }
     .item-active {
       border: solid @themeRed 5px;
+      box-shadow: 1px 4px 6px #ccc;
+      margin-top: -3px;
+
     }
   }
   .input-item {
+    height: 148px;
     p {
       overflow: hidden;
       &:first-child {
         font-weight: 700;
         padding-top: 28px;
-      //  padding-bottom: 10px;
       }
     }
     input {
-      padding-bottom: 10px;
+      padding-bottom: 0px;
       width: 60px;
       box-sizing: border-box;
-      padding: 10px 0;
+      padding: 10px 0 18px 0;
     }
   }
   .button_bottom {
     padding-top: 15px;
-        button {
-          background: @themeRed;
-          border-radius: @radusNormal;
-        }
       }
 }
 @keyframes fly {
@@ -233,17 +266,19 @@ export default {
   }
 }
 @keyframes coin-fly {
-  0% {
-   // background-postion: center 35px;
-  //  background-size: 45%;
-  } 
   50% {
      background-position: center 10px;
-   //  background-size: 55%;
   }
   100% {
     background-position: center 35px;
- //   background-size: 55%;
+  }
+}
+@keyframes text-scroll {
+  0% {
+    transform: translateX(300px);
+  }
+  100% {
+    transform: translateX(0px);
   }
 }
 </style>
